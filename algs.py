@@ -39,7 +39,36 @@ def getFibBase(u):
         S = S + "0"
         i -= 1
     return S + getFibBase(m)
+
+def fibBaseConverter(other_base):
+    new_string = "0"*len(other_base)
+    double_zero_pointer = len(other_base) 
+    prev_character = "0"
+    print("Original String [", other_base, "]")
+    for i in range(len(other_base)-1, -1, -1):
+        c = other_base[len(other_base) -1 - i]
+        print("new string [", new_string, "] i " ,i, "length: ", len(new_string)," double zero pointer [", double_zero_pointer, "]", "other_base[i] = [" , c, "]" )
+        if (prev_character == "0" and c == "0"):
+            print("in double 0")
+            double_zero_position = i 
+            prev_character = "0"
+        elif (prev_character == "1" and c == "1"):
+            print("in double one: ",i,  new_string[:i], "0"*(double_zero_pointer - i), "1", new_string[double_zero_pointer +1:])
+            new_string = new_string[:i] + "0"*(double_zero_pointer - i) + "1" + new_string[double_zero_pointer +1:] 
+            double_zero_position = i
+            prev_character = "0"
+        else:
+            print("in regular case: other_base[i] = ["+c+"]", new_string[:i], c, new_string[i+1:])
+            print("len: ", len(new_string))
+            new_string = new_string[:i] +  c + new_string[i+1:]
+            prev_character = c 
+            print("len: ", len(new_string))
+    return new_string
+
 if __name__ == "__main__":
     u = 138 
     min_weight_fib_base = getFibBase(u)
+    other_base = "1101100"
+    ours = fibBaseConverter(other_base)
+    print(ours)
     print(f"u: {u}\n Min-Weight Fibonacci Base: {min_weight_fib_base}")
